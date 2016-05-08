@@ -1,0 +1,78 @@
+
+* Describe the fetch-execute cycle.
+** Program counter points to a spot in memory.
+** The instruction is fetched.
+** The CPU processes the instruction.
+
+* What is a register?
+** Registers are high-speed, CPU-side memory.
+
+* How would computation be more difficult without registers?
+** Without registers, every computation would need to happen in main memory. The CPU would have to cross the bus to perform any action.
+
+* How do you represent numbers larger than 255?
+** You use more than 1 byte.
+
+* How big are the registers on the machines we will be using?
+** 1 word = 4 bytes = 32 bits.
+* How does a computer know how to interpret a given byte or set of bytes of memory?
+** The instruction decoder interprets instruction and the memory required by those instructions. The CPU then fetches that memory and passes everything to the arithmetic and logic processing unit, which handles the computation. The result of the computation is then sent via data bus to main memory.
+* What are the addressing modes and what are they used for?
+** Immediate mode
+*** The data is embedded in the instruction (e.g. instead of loading a memory address to read the value 20 from, we'd just include 20 in the instruction and load that into the register).
+** Register addressing mode
+*** The instruction contains a register to access, instead of a memory location.
+** Direct addressing mode
+*** The instruction contains the memory address to access. 
+** Indexed addressing mode
+*** The instruction contains a memory address to access and specifies an index register. In x86 processors, a multiplier option is also available.
+** Indirect addressing mode
+*** The instruction contains a register that contains a pointer to where the data should be accessed.
+** Base pointer addressing mode
+*** Similar to indirect, but an offset is also included that's added to the register's value before lookup.
+
+* What does the instruction pointer do?
+** The instruction pointer points to blocks of memory that should be executed as instructions, rather than treated as raw data.
+
+* What data would you use in an employee record?
+** Name
+** Position
+** Salary
+
+* How would you lay it out in memory?
+** Name - a pointer
+** Position - a pointer (4 bytes from the start of the record)
+** Salary - an integer (8 bytes from the start of the record)
+
+*** The record would be 12 bytes.
+
+* If I had the pointer at the beginning of the employee record above, and wanted to access a particular piece of data inside of it, what addressing mode would I use?
+** Each piece of data is 4 bytes long, so it makes the most sense to use indexed addressing mode.
+** [0|1|2|3|4|5|6|7|8|9|10|11]
+** Name - index 0
+** Position - index 4, multiplier 1
+** Salary - index 8, multiplier 1
+
+* In base pointer addressing mode, if you have a register holding the value 3122, and an offset of 20, what address would you be trying to access?
+** 3142
+
+* In indexed addressing mode, if the base address is 6512, the index register has a 5, and the multiplier is 4, what address would you be trying to access?
+** 6532
+
+* In indexed addressing mode, if the base address is 123472, the index register has a 0, and the multiplier is 4, what address would you be trying to access?
+** 123472
+
+* In indexed addressing mode, if the base address is 9123478, the index register has a 20, and the multiplier is 1, what address would you be trying to access?
+** 9123498
+
+* What are the minimum number of addressing modes needed for computation?
+** I couldn't find an answer for this online.
+
+* Why include addressing modes that aren't strictly needed?
+** I couldn't find an answer for this online.
+
+* Research and then describe how pipelining (or one of the other complicating factors) affects the fetch-execute cycle.
+** Pipelining aims to keep every part of the CPU busy at all times. For any given instruction, the same steps are still executed (e.g. fetch, decode, execute, write-back) but as each instruction progresses to the next step in the cycle another instruction may be added, enabling the CPU to keep every step going for different instructions.
+
+* Research and then describe the tradeoffs between fixed-length instructions and variable-length instructions.
+** Variable-length instruction sets are more flexible, but make it harder to optimize for pipelining and concurrency.
